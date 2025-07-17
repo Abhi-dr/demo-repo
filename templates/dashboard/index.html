@@ -1,0 +1,65 @@
+{% extends "home/base.html" %}
+
+{% block body %}
+<div class="p-6 bg-white dark:bg-black min-h-screen transition-all">
+  <!-- Welcome Section -->
+  <div class="mb-8">
+    <h2 class="text-4xl font-bold text-orange-500 mb-2">Welcome back, {{ user.username }}!</h2>
+    <p class="text-gray-700 dark:text-gray-300 text-sm">Here's a quick overview of your activity on DareDen.</p>
+  </div>
+
+  <!-- Stats Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+    <!-- Total Dares -->
+    <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl shadow-md">
+      <h3 class="text-lg font-bold text-orange-500">Total Dares</h3>
+      <p class="text-3xl font-bold mt-2">24</p>
+    </div>
+
+    <!-- Completed Dares -->
+    <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl shadow-md">
+      <h3 class="text-lg font-bold text-orange-500">Completed</h3>
+      <p class="text-3xl font-bold mt-2">18</p>
+    </div>
+
+    <!-- Pending Dares -->
+    <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl shadow-md">
+      <h3 class="text-lg font-bold text-orange-500">Pending</h3>
+      <p class="text-3xl font-bold mt-2">6</p>
+    </div>
+
+    <!-- Leaderboard Rank -->
+    <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl shadow-md">
+      <h3 class="text-lg font-bold text-orange-500">Leaderboard Rank</h3>
+      <p class="text-3xl font-bold mt-2">#7</p>
+    </div>
+  </div>
+
+  <!-- Recent Dares Section -->
+  <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl shadow-md">
+    <h3 class="text-2xl font-bold text-orange-500 mb-4">Recent Dares</h3>
+    <ul class="space-y-4">
+      <li class="flex items-start justify-between">
+        <div>
+          <h4 class="font-semibold">Dance in the cafeteria</h4>
+          <p class="text-sm text-gray-600 dark:text-gray-400">Deadline: July 20, 2025</p>
+        </div>
+        <span
+          class="bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-300 text-sm px-3 py-1 rounded-full">Pending</span>
+      </li>
+
+      <li class="flex items-start justify-between">
+        <div>
+          <h4 class="font-semibold">Propose to a stranger with a rose 🌹</h4>
+          <p class="text-sm text-gray-600 dark:text-gray-400">Deadline: July 15, 2025</p>
+        </div>
+        <span
+          class="bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300 text-sm px-3 py-1 rounded-full">Completed</span>
+      </li>
+    </ul>
+  </div>
+</div>
+{% endblock %}
+
+
+
