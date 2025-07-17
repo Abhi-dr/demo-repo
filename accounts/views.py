@@ -55,5 +55,3 @@ def logout(request):
     auth.logout(request)
 
     return redirect("home")
-
-# This is a line i am using just to showcase git
