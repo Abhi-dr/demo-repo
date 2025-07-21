@@ -1,65 +1,132 @@
-{% extends "home/base.html" %}
-
-{% block body %}
-<div class="p-6 bg-white dark:bg-black min-h-screen transition-all">
-  <!-- Welcome Section -->
-  <div class="mb-8">
-    <h2 class="text-4xl font-bold text-orange-500 mb-2">Welcome back, {{ user.username }}!</h2>
-    <p class="text-gray-700 dark:text-gray-300 text-sm">Here's a quick overview of your activity on DareDen.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DareDen Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(2deg); }
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
+      50% { box-shadow: 0 0 30px rgba(99, 102, 241, 0.6); }
+    }
+    
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .float-animation { animation: float 6s ease-in-out infinite; }
+    .pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+    .slide-in { animation: slideIn 0.6s ease-out forwards; }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .hover-lift {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .hover-lift:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 via-white to-blue-50 min-h-screen">
+  
+  <!-- Decorative Background Elements -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-purple-200 to-pink-200 rounded-full opacity-30 float-animation"></div>
+    <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-blue-200 to-indigo-200 rounded-full opacity-20" style="animation: float 8s ease-in-out infinite reverse;"></div>
+    <div class="absolute top-1/3 left-1/4 w-32 h-32 bg-gradient-to-br from-yellow-200 to-orange-200 rounded-full opacity-25" style="animation: float 10s ease-in-out infinite;"></div>
   </div>
 
-  <!-- Stats Grid -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-    <!-- Total Dares -->
-    <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl shadow-md">
-      <h3 class="text-lg font-bold text-orange-500">Total Dares</h3>
-      <p class="text-3xl font-bold mt-2">24</p>
+  <!-- Header -->
+  <header class="relative z-10 glass-card shadow-lg py-6 px-8 flex justify-between items-center mx-6 mt-6 rounded-2xl">
+    <div class="flex items-center space-x-4">
+      <div class="w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center pulse-glow">
+        <span class="text-white text-xl font-bold">🔥</span>
+      </div>
+      <h1 class="text-3xl font-bold gradient-text tracking-wider">DareDen</h1>
+    </div>
+    <div class="flex items-center space-x-4">
+      <div class="w-10 h-10 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center">
+        <span class="text-white text-sm font-semibold">U</span>
+      </div>
+      <span class="text-gray-600 font-medium">Welcome, {{ student.first_name }}{{ student.last_name }}!</span>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="relative z-10 p-6">
+    
+
+    <!-- Recent Dares Section -->
+    <div class="glass-card rounded-2xl shadow-lg p-8 slide-in" style="animation-delay: 0.4s;">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl font-bold text-gray-800">My Dares</h2>
+        <a href="{% url 'create_dare' %}" class="px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-lg hover:from-indigo-600 hover:to-purple-700 transition-all duration-200 font-medium">
+          + Create Dare
+        </a>
+      </div>
+      
+      <div class="overflow-hidden rounded-xl border border-gray-200">
+        <table class="min-w-full">
+          <thead class="bg-gradient-to-r from-gray-50 to-gray-100">
+            <tr>
+              <th class="text-left py-4 px-6 text-gray-600 font-semibold uppercase tracking-wider text-sm">Dare</th>
+              <th class="text-left py-4 px-6 text-gray-600 font-semibold uppercase tracking-wider text-sm">Deadline</th>
+              <th class="text-left py-4 px-6 text-gray-600 font-semibold uppercase tracking-wider text-sm">Description</th>
+              <th class="text-left py-4 px-6 text-gray-600 font-semibold uppercase tracking-wider text-sm">Action</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            
+            {% for dare in dares %}
+
+            <tr class="hover:bg-gray-50 transition-colors">
+              <td class="py-4 px-6">
+                <div class="flex items-center space-x-3">
+                  <span class="font-semibold text-gray-800">{{ dare.title }}</span>
+                </div>
+              </td>
+              <td class="py-4 px-6 text-gray-600">{{ dare.deadline }}</td>
+              <td class="py-4 px-6">
+                <div class="flex items-center space-x-3">
+                  <span class="font-semibold text-gray-800">{{ dare.dare }}</span>
+                </div>
+              </td>
+              <td class="py-4 px-6">
+                <button class="text-indigo-600 hover:text-indigo-800 font-medium text-sm">✏️</button>
+                <a href="{% url 'delete_dare' dare.id %}" class="text-indigo-600 hover:text-indigo-800 font-medium text-sm">🗑️</a>
+              </td>
+            </tr>
+
+            {% endfor %}
+
+
+          </tbody>
+        </table>
+      </div>
     </div>
 
-    <!-- Completed Dares -->
-    <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl shadow-md">
-      <h3 class="text-lg font-bold text-orange-500">Completed</h3>
-      <p class="text-3xl font-bold mt-2">18</p>
-    </div>
+  </main>
 
-    <!-- Pending Dares -->
-    <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl shadow-md">
-      <h3 class="text-lg font-bold text-orange-500">Pending</h3>
-      <p class="text-3xl font-bold mt-2">6</p>
-    </div>
-
-    <!-- Leaderboard Rank -->
-    <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl shadow-md">
-      <h3 class="text-lg font-bold text-orange-500">Leaderboard Rank</h3>
-      <p class="text-3xl font-bold mt-2">#7</p>
-    </div>
-  </div>
-
-  <!-- Recent Dares Section -->
-  <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl shadow-md">
-    <h3 class="text-2xl font-bold text-orange-500 mb-4">Recent Dares</h3>
-    <ul class="space-y-4">
-      <li class="flex items-start justify-between">
-        <div>
-          <h4 class="font-semibold">Dance in the cafeteria</h4>
-          <p class="text-sm text-gray-600 dark:text-gray-400">Deadline: July 20, 2025</p>
-        </div>
-        <span
-          class="bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-300 text-sm px-3 py-1 rounded-full">Pending</span>
-      </li>
-
-      <li class="flex items-start justify-between">
-        <div>
-          <h4 class="font-semibold">Propose to a stranger with a rose 🌹</h4>
-          <p class="text-sm text-gray-600 dark:text-gray-400">Deadline: July 15, 2025</p>
-        </div>
-        <span
-          class="bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300 text-sm px-3 py-1 rounded-full">Completed</span>
-      </li>
-    </ul>
-  </div>
-</div>
-{% endblock %}
-
-
-
+</body>
+</html>

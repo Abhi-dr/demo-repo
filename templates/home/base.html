@@ -39,7 +39,7 @@
   <!-- Navbar -->
   <nav class="flex flex-wrap items-center justify-between px-6 py-4 bg-gray-200 dark:bg-gray-900 shadow-md transition">
     <div class="flex items-center space-x-3">
-      <img src="logo.png" alt="DareDen Logo" class="h-10 w-10" />
+      <!-- <img src="logo.png" alt="DareDen Logo" class="h-10 w-10" /> -->
       <h1 class="text-3xl tracking-widest font-bold text-orange-500">DareDen</h1>
     </div>
 
@@ -47,15 +47,11 @@
     <div class="space-x-4 hidden md:flex text-sm font-medium">
       <a href="{% url 'home' %}" class="hover:text-orange-500 transition">Home</a>
       <a href="{% url 'dares' %}" class="hover:text-orange-500 transition">Dares</a>
-      <a href="{% url 'create_dare' %}" class="hover:text-orange-500 transition">Add a dare</a>
+      
     </div>
 
     <!-- Buttons -->
     <div class="flex items-center space-x-4 mt-4 md:mt-0">
-      <!-- Dark mode toggle -->
-      <button id="toggle-theme" class="text-xl text-orange-500 hover:text-orange-600 transition">
-        🌙
-      </button>
 
       {% if request.user.is_authenticated %}
 
@@ -92,15 +88,6 @@
   <footer class="bg-gray-200 dark:bg-gray-900 py-8 text-center">
     <p class="text-gray-600 dark:text-gray-500">&copy; 2025 DareDen. All Rights Reserved.</p>
   </footer>
-
-  <!-- Toggle Dark Mode Script -->
-  <script>
-    const toggleBtn = document.getElementById('toggle-theme');
-    toggleBtn.addEventListener('click', () => {
-      document.documentElement.classList.toggle('dark');
-      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-    });
-  </script>
 
 </body>
 
