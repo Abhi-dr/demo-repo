@@ -60,3 +60,6 @@ def logout(request):
     auth.logout(request)
 
     return redirect("home")
+
+
+# This is a new line to showcase the flow of github repo
