@@ -9,5 +9,7 @@ urlpatterns = [
     path("delete-dare/<int:id>", views.delete_dare, name="delete_dare"),
 
     path("edit_dare/<int:id>", views.edit_dare, name="edit_dare"),
+
+    path("ask-ai/", views.ask_ai, name = "ask_ai"),
 ]
 
